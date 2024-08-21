@@ -6,21 +6,24 @@ public class Database
 
     public void Get(int id)
     {
-        var span = SentrySdk.GetSpan()?.StartChild("database", $"get {id}");
+        // var span = SentrySdk.GetSpan()?.StartChild("database", $"get {id}");
+        using var task = Tracing.Source.StartActivity();
+        task.SetDisplayName($"get {id}");
         _data.TryGetValue(id, out _);
-        span?.Finish();
     }
     public void Save(int id, object data)
     {
-        var span = SentrySdk.GetSpan()?.StartChild("database", $"save {id}");
+        // var span = SentrySdk.GetSpan()?.StartChild("database", $"save {id}");
+        using var task = Tracing.Source.StartActivity();
+        task.SetDisplayName($"save {id}");
         _data.TryAdd(id, data);
-        span?.Finish();
     }
     public void Delete(int id)
     {
-        var span = SentrySdk.GetSpan()?.StartChild("database", $"remove {id}");
+        // var span = SentrySdk.GetSpan()?.StartChild("database", $"remove {id}");
+        using var task = Tracing.Source.StartActivity();
+        task.SetDisplayName($"remove {id}");
         _data.Remove(id, out var _);
-        span?.Finish();
     }
     public ICollection<int> GetIds()
     {

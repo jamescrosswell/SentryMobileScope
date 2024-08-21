@@ -24,10 +24,10 @@ public class WorkQueue
                 await Task.Delay(50);
                 if (queue.TryDequeue(out var item))
                 {
-                    var transaction = SentrySdk.StartTransaction(item, "test.workQueue");
-                    SentrySdk.ConfigureScope(scope => scope.Transaction = transaction);
+                    // var transaction = SentrySdk.StartTransaction(item, "test.workQueue");
+                    using var task = Tracing.Source.StartActivity();
+                    task.SetDisplayName("test.workQueue");
                     await _dataService.SendAllData();
-                    transaction.Finish();
                 }
             }
         });

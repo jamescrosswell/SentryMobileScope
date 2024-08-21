@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Sentry.OpenTelemetry;
 
 namespace SentryMobileScope;
 
@@ -12,10 +13,10 @@ public static class MauiProgram
             .UseSentry(options =>
             {
                 // The DSN is the only required setting.
-                options.Dsn =
-                    "https://27ca1597850dd871875d6a2a2bdf2666@o4507606271524864.ingest.us.sentry.io/4507810958278656";
+                options.Dsn = "https://27ca1597850dd871875d6a2a2bdf2666@o4507606271524864.ingest.us.sentry.io/4507810958278656";
                 options.Debug = true;
                 options.TracesSampleRate = 1.0;
+                options.UseOpenTelemetry();
             })
             .ConfigureFonts(fonts =>
             {
